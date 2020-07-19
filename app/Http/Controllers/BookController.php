@@ -6,6 +6,7 @@ use App\Book;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
@@ -67,21 +68,32 @@ class BookController extends Controller
      *
      * @param  string  $date
      * @param  string  $time
-     * @return string MySQL formatted datetime string
+     * @return string MySQL formatted datetime string of publication date
      *
      */
     private function getPublishedDatetime(?string $date, ?string $time) : ?string {
         if($date) {
-             $dateStr = $date;
+            $dateStr = $date;
 
-             if($time) {
-                 $dateStr .= ' ' . $time;
-             }
+            if($time) {
+                $dateStr .= ' ' . $time;
+            }
 
-             return date('Y-m-d H:i:s', strtotime($dateStr));
-         }
+            return $this->toMysqlDatetime($dateStr);
+        }
 
         return null;
+    }
+
+    /**
+     * Converts datetime string into MySQL format
+     *
+     * @param  string  $dateString
+     * @return string MySQL formatted datetime string
+     *
+     */
+    private function toMysqlDatetime(string $dateString) : string {
+        return date('Y-m-d H:i:s', strtotime($dateString));
     }
 
     /**
@@ -93,19 +105,36 @@ class BookController extends Controller
     public function list(Request $request)
     {
 
-        $books = Book::all()->sortBy('name');
+        $books = DB::table('book');
 
         if($request->search) {
-            $search = strtolower($request->search);
-
-            $books = $books->filter(function($book) use ($search) {
-                 return strpos(strtolower($book), $search);
-            });
+            $books = $books->where('name', 'LIKE', '%'.$request->search.'%');
         }
 
+        if($request->date_from) {
+            $books = $books->where('published_on', '>=', $this->toMysqlDatetime($request->date_from));
+        }
+
+        if($request->date_to) {
+            $books = $books->where('published_on', '<=',  $this->toMysqlDatetime($request->date_to));
+        }
+
+        $orderByColumn = 'name';
+
+        if($request->order_by) {
+            $orderByColumn = $request->order_by;
+        }
+
+        $books = $books->orderBy($orderByColumn)->simplePaginate(2);
+
         return view('books.list', [
-            'books' => $books
+            'books' => $books,
+            'query' => [
+                'search' => $request->search,
+                'date_from' => $request->date_from,
+                'date_to' => $request->date_to,
+                'order_by' => $request->order_by,
+            ]
         ]);
     }
-
 }

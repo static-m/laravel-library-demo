@@ -22,6 +22,7 @@ class CreateBookTable extends Migration
             $table->dateTime('published_on')->nullable();
             $table->string('author_email')->nullable();
             $table->integer('pages')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
 
             $table->index('name');

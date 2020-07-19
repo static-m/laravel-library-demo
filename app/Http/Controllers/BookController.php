@@ -35,7 +35,8 @@ class BookController extends Controller
             'published_time' => 'nullable|date_format:H:i',
             'author_email' => 'nullable|email|max:255',
             'abstract' => 'nullable',
-            'pages' => 'nullable|integer|min:1'
+            'pages' => 'nullable|integer|min:1',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $book = Book::create([
@@ -49,6 +50,14 @@ class BookController extends Controller
         ]);
 
         $book->save();
+
+        if(isset($validatedData['image'])) {
+            $imageName = $book->id.'.'.$validatedData['image']->extension();
+            $request->image->move(public_path('images'), $imageName);
+
+            $book->image = $imageName;
+            $book->save();
+        }
 
         return redirect(route('books.create'))->with('status', 'Kniha bola pridaná!');
     }

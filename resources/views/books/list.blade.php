@@ -23,11 +23,21 @@
                         </div>
                         <div class='card-body'>
                             <div class='row'>
-                                <div class='col-md-4'><b>ISBN:</b> {{ $book['isbn'] }} </div>
-                                <div class='col-md-4'><b>Žáner:</b> {{ $book['genre'] }} </div>
-                                <div class='col-md-4'><b>Publikované:</b> {{ $book['published_on'] }} </div>
-                                <div class='col-md-4'><b>E-mail autora:</b> {{ $book['author_email'] }} </div>
-                                <div class='col-md-4'><b>Počet strán:</b> {{ $book['pages'] }} </div>
+                                <div class='col-md-4'>
+                                    <b>ISBN:</b> {{ $book['isbn'] }}<br>
+                                    <b>Žáner:</b> {{ $book['genre'] }}<br>
+                                    <b>Publikované:</b> {{ $book['published_on'] }}
+                                </div>
+                                <div class='col-md-4'>
+                                    <b>E-mail autora:</b> {{ $book['author_email'] }}<br>
+                                    <b>Počet strán:</b> {{ $book['pages'] }}
+                                </div>
+
+                                @if ($book['image'])
+                                    <div class='col-md-4'>
+                                        <img class="img-thumbnail" src="{{ asset('images/'.$book['image']) }}">
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         @if ($book['abstract'])

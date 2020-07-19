@@ -14,7 +14,7 @@
 
         <h1>Pridať knihu</h1>
 
-        {!!Form::open()!!}
+        {!!Form::open()->multipart()!!}
 
         {!!Form::text('name', 'Názov')->required()->placeholder('Názov knihy')->lg()!!}
 
@@ -30,6 +30,8 @@
         {!!Form::text('author_email', 'E-mail autora')->type('email')->placeholder('E-mail autora')->lg()!!}
 
         {!!Form::range('pages', 'Počet strán')->type('number')->placeholder('Počet strán')->lg()!!}
+
+        {!!Form::file('image', 'Titulný obrázok')!!}
 
         {!!Form::submit("Pridať")->lg()!!}
 

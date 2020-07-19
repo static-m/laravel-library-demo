@@ -56,9 +56,12 @@ class BookController extends Controller
     /**
      * Show the form to create a new book.
      *
-     * @return Response
+     * @param  string  $date
+     * @param  string  $time
+     * @return string MySQL formatted datetime string
+     *
      */
-    private function getPublishedDatetime($date, $time) {
+    private function getPublishedDatetime(?string $date, ?string $time) : ?string {
         if($date) {
              $dateStr = $date;
 

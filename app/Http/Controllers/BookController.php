@@ -80,7 +80,16 @@ class BookController extends Controller
      */
     public function list(Request $request)
     {
+
         $books = Book::all()->sortBy('name');
+
+        if($request->search) {
+            $search = strtolower($request->search);
+
+            $books = $books->filter(function($book) use ($search) {
+                 return strpos(strtolower($book), $search);
+            });
+        }
 
         return view('books.list', [
             'books' => $books

@@ -5,6 +5,14 @@
 @section('sidebar')
 
 @section('content')
+    <div class="container text-right mb-5">
+        {!!Form::open()->formInline()->method('get')!!}
+
+        {!!Form::text('search', 'Hľadať')->required()->placeholder('Hľadať')->lg()!!}
+        {!!Form::submit("Hľadať")->lg()!!}
+
+        {!!Form::close()!!}
+    </div>
     <div class='container'>
         @foreach ($books as $book)
             <div class='row'>

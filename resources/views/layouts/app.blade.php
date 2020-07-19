@@ -19,11 +19,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Zoznam <span class="sr-only"></span></a>
+            <li class="nav-item @if(Route::is('books.list')) active @endif">
+                <a class="nav-link" href="{{ route('books.list') }}">Zoznam <span class="sr-only"></span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Pridať</a>
+            <li class="nav-item @if(Route::is('books.add')) active @endif">
+                <a class="nav-link" href="{{ route('books.add') }}">Pridať</a>
             </li>
         </ul>
     </div>

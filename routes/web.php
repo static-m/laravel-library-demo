@@ -14,5 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.app');
-});
+    return view('books.list');
+})->name('books.list');
+
+Route::get('/add', function () {
+    return view('books.add');
+})->name('books.add');

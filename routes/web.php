@@ -18,5 +18,5 @@ Route::get('/', function () {
 })->name('books.list');
 
 Route::get('/add', function () {
-    return view('books.add');
-})->name('books.add');
+    return view('books.create');
+})->name('books.create');

@@ -22,8 +22,8 @@
             <li class="nav-item @if(Route::is('books.list')) active @endif">
                 <a class="nav-link" href="{{ route('books.list') }}">Zoznam <span class="sr-only"></span></a>
             </li>
-            <li class="nav-item @if(Route::is('books.add')) active @endif">
-                <a class="nav-link" href="{{ route('books.add') }}">Pridať</a>
+            <li class="nav-item @if(Route::is('books.create')) active @endif">
+                <a class="nav-link" href="{{ route('books.create') }}">Pridať</a>
             </li>
         </ul>
     </div>

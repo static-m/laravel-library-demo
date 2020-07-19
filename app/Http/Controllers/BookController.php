@@ -71,4 +71,20 @@ class BookController extends Controller
 
         return null;
     }
+
+    /**
+     * List the books
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function list(Request $request)
+    {
+        $books = Book::all()->sortBy('name');
+
+        return view('books.list', [
+            'books' => $books
+        ]);
+    }
+
 }

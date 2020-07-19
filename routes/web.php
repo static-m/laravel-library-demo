@@ -17,6 +17,6 @@ Route::get('/', function () {
     return view('books.list');
 })->name('books.list');
 
-Route::get('/add', function () {
-    return view('books.create');
-})->name('books.create');
+
+Route::get('/add', 'BookController@create')->name('books.create');
+Route::post('/add', 'BookController@store');
